@@ -1,0 +1,37 @@
+{
+  "clients": [
+    {
+      "id": 99872,
+      "username": "Client 1",
+      "first_name": "Jonh",
+      "last_name": "Snow",
+      "country": "USA",
+      "description": "long text with html tags <a href=\"http://www.google.com\">Google</a> some text <a href=\"#\">test link </a>"
+    },
+    {
+      "id": 99873,
+      "username": "Client 2",
+      "first_name": "Vova",
+      "last_name": "Surkov",
+      "country": "LV",
+      "description": "long text with html tags"
+    },
+    {
+      "id": 99874,
+      "username": "Client 3",
+      "first_name": "Jonh",
+      "last_name": "Smith",
+      "country": "USA",
+      "description": "long text with html tags"
+    },
+    {
+      "id": 99875,
+      "username": "Client 4",
+      "first_name": "Nigga",
+      "last_name": "Niggovich",
+      "country": "NIGGER",
+      "description": "long text with html tags"
+    }
+  ]
+
+}
