@@ -23,38 +23,46 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class InfoAboutClientActivity extends AppCompatActivity {
-    private LinearLayout linearLayout;
+
+    private LinearLayout mLinearLayout;
+    private TextView mTextViewFirstName;
+    private TextView mTextViewLastName;
+    private TextView mTextViewCountry;
+    private TextView mTextViewDescription;
+    private ActionBar mActionBar;
+    private MenuInflater mInflater;
+    private String mJsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_about_client);
-        ActionBar actionBar = getSupportActionBar();
-        linearLayout = (LinearLayout) findViewById(R.id.info);
-        TextView first_name_text = (TextView)findViewById(R.id.first_name);
-        TextView last_name_text = (TextView)findViewById(R.id.last_name);
-        TextView country_text = (TextView)findViewById(R.id.country);
-        TextView description_text = (TextView)findViewById(R.id.description);
-        String first_name = getIntent().getStringExtra("first_name");
-        String last_name = getIntent().getStringExtra("last_name");
+        mActionBar = getSupportActionBar();
+        mLinearLayout = (LinearLayout)findViewById(R.id.info);
+        mTextViewFirstName = (TextView)findViewById(R.id.text_view_first_name);
+        mTextViewLastName = (TextView)findViewById(R.id.text_view_last_name);
+        mTextViewCountry = (TextView)findViewById(R.id.text_view_country);
+        mTextViewDescription = (TextView)findViewById(R.id.text_view_description);
+        String firstName = getIntent().getStringExtra("firstName");
+        String lastName = getIntent().getStringExtra("lastName");
         String country = getIntent().getStringExtra("country");
         String description = getIntent().getStringExtra("description");
-        first_name_text.setText(first_name);
-        last_name_text.setText(last_name);
-        description_text.setText(Html.fromHtml(description));
-        description_text.setMovementMethod(LinkMovementMethod.getInstance());
-        country_text.setText(country);
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        actionBar.setCustomView(R.layout.toolbar_title);
-        TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.tvTitle);
-        title.setText(getIntent().getStringExtra("user_name"));
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        mTextViewFirstName.setText(firstName);
+        mTextViewLastName.setText(lastName);
+        mTextViewCountry.setText(country);
+        mTextViewDescription.setText(Html.fromHtml(description));
+        mTextViewDescription.setMovementMethod(LinkMovementMethod.getInstance());
+        mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        mActionBar.setCustomView(R.layout.menu_toolbar_title);
+        TextView title = (TextView) mActionBar.getCustomView().findViewById(R.id.text_view_toolbar_title);
+        title.setText(getIntent().getStringExtra("userName"));
+        mActionBar.setHomeButtonEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        mInflater = getMenuInflater();
+        mInflater.inflate(R.menu.activity_info_about_client, menu);
         return true;
     }
 
@@ -64,12 +72,11 @@ public class InfoAboutClientActivity extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.action_remove:
-                Integer id = getIntent().getIntExtra("id",-1);
-                jsonDelete(id);
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "User has been deleted", Toast.LENGTH_SHORT);
+                Integer userId = getIntent().getIntExtra("id",-1);
+                jsonDelete(userId);
+                Toast toast = Toast.makeText(getApplicationContext(),"User has been deleted", Toast.LENGTH_SHORT);
                 toast.show();
-                MainActivity.buttonId = id;
+                MainActivity.buttonId = userId;
                 this.finish();
                 break;
             default:
@@ -79,32 +86,24 @@ public class InfoAboutClientActivity extends AppCompatActivity {
     }
 
 
-    private void jsonDelete(int id){
-        String json;
+    private void jsonDelete(int userId){
+
         try {
             InputStream fileJson ;
-            if(new File(getFilesDir()+"/clients.json").exists()){
-                fileJson = openFileInput("clients.json");
-            }else {
-                fileJson = getAssets().open("clients.json");
-
-            }
+            if (new File(getFilesDir()+"/clients.json").exists()) fileJson = openFileInput("clients.json");
+            else fileJson = getAssets().open("clients.json");
             int size = fileJson.available();
             byte[] buffer = new byte[size];
             fileJson.read(buffer);
             fileJson.close();
-            json = new String(buffer,"UTF-8");
-
-            JSONObject jsonObject = new JSONObject(json);
+            mJsonString = new String(buffer,"UTF-8");
+            JSONObject jsonObject = new JSONObject(mJsonString);
             JSONArray jsonArray = jsonObject.getJSONArray("clients");
             JSONArray copyJsonArray = new JSONArray();
-            for(int i = 0; i < jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject userInfo = jsonArray.getJSONObject(i);
-                if(userInfo.getInt("id") != id) {
-                    copyJsonArray.put(userInfo);
-                }
+                if (userInfo.getInt("id") != userId) copyJsonArray.put(userInfo);
             }
-
             JSONObject newJsonObject = new JSONObject();
             newJsonObject.put("clients",copyJsonArray);
             FileOutputStream file = openFileOutput("clients.json",MODE_PRIVATE);

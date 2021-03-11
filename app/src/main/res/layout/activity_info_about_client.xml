@@ -17,7 +17,6 @@
         >
 
         <LinearLayout
-            android:id="@+id/first_name_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -26,23 +25,20 @@
             >
 
             <TextView
-                android:id="@+id/first_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FIRST NAME:" />
 
             <TextView
-                android:id="@+id/first_name"
+                android:id="@+id/text_view_first_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:textStyle="bold"
-                android:textSize="19dp"
-                />
+                android:textSize="19dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/last_name_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -50,14 +46,13 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/last_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="LAST NAME:"
                 />
 
             <TextView
-                android:id="@+id/last_name"
+                android:id="@+id/text_view_last_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="22dp"
@@ -68,7 +63,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/country_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -77,14 +71,13 @@
 
 
             <TextView
-                android:id="@+id/country_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="COUNTRY:"
                 />
 
             <TextView
-                android:id="@+id/country"
+                android:id="@+id/text_view_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="37dp"
@@ -95,7 +88,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/description_row"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -103,7 +95,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/text_view_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
